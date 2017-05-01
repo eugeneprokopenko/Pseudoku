@@ -2,7 +2,12 @@
 import java.util.*;
 import javafx.scene.text.Text;
 
-// This is a class that represents one equation, but it is able to perform functions on a set of equations too. This might be conceptually confusing at first.
+/**
+ * This is a class that represents one equation, but it is
+ * able to perform functions on a set of equations too.
+ *
+ * @author Eugene Prokopenko
+ */
 public class Equation {
 
 	// the String of the hashmap represents the letter variables of the equation
@@ -10,16 +15,29 @@ public class Equation {
 	public TreeMap<String, Integer> map;
 
 
+	/**
+	 * Constructor for an equation. It creates an empty
+	 * TreeMap.
+	 */
 	public Equation() {
 
 		map = new TreeMap<>();
 	}
 
+	/**
+	 * A reset method for an equation. It clears the TreeMap.
+	 */
 	public void reset() {
 		map.clear();
 	}
 
 
+	/**
+	 * A method that creates a string representation of an
+	 * equation, for display purposes.
+	 *
+	 * @return temp A string representation of an equation's TreeMap.
+	 */
 	public String toString() {
 
 		String temp = "";
@@ -59,7 +77,14 @@ public class Equation {
 
 	}
 
-	// removes redundant equations from an ArrayList of Equations
+	/**
+	 * Removes redundant equations from an ArrayList of Equations.
+	 * This method compares each equation to each other and ensures
+	 * that only one unique equation remains.
+	 *
+	 * @param arrayList contains equations to evaluate.
+	 */
+	//
 	public static void removeRedundantEquations(ArrayList<Equation> arrayList) {
 
 		if (arrayList.size() > 1) {
@@ -84,9 +109,14 @@ public class Equation {
 		}
 	}
 
-	// Adds missing variables, with a coefficient of 0, to all equations so as
-	// to equalize length for linear algebra decomposition solving.
-	// Returns the total number of variables among the equations.
+	/**
+	 * This method adds missing variables, with a coefficient of 0,
+	 * to all equations so as to equalize length.
+	 *
+	 * @param arrayList contains equations to evaluate.
+	 * @return setOfAllVariables set of all the variables among
+	 * the equations.
+	 */
 	public static HashSet<String> equalize(ArrayList<Equation> arrayList) {
 
 		HashSet<String> setOfAllVariables = new HashSet<String>();
@@ -140,7 +170,15 @@ public class Equation {
 
 	}
 
-	// displays equation list and solution set in the equationBox pane
+	//
+	/**
+	 * Displays equation list and solution set in the equationBox pane.
+	 *
+	 *  @param arrayList contains equations to display.
+	 *  @param freeVariablesPresent tells the method whether to display
+	 *  a message notifying user whether this is a vertex.
+	 *
+	 */
 	public static void display(ArrayList<Equation> arrayList, boolean freeVariablesPresent) {
 
 		// clears the pane that displays equations and solutions in preparation
@@ -167,9 +205,16 @@ public class Equation {
 
 	}
 
-	// This function solves a system of linear equations and returns true if
-	// free variables are present
-	// and returns false if no free variables are present.
+	/**
+	 * Solves a system of linear equations and calls the method
+	 * containsFreeVariables to determine whether
+	 * any free variables are present in the set of equations.
+	 *
+	 * @param arrayList contains equations to evaluate.
+	 * @param setOfAllVariables a set of all the variables among the equations.
+	 * @return freeVariablesPresent true if free variables are present,
+	 * false otherwise
+	 */
 	public static boolean solve(ArrayList<Equation> arrayList, HashSet<String> setOfAllVariables) {
 
 		int numberOfVariables = setOfAllVariables.size();
@@ -179,17 +224,6 @@ public class Equation {
 
 		int numberOfEquations = arrayList.size();
 
-		/*
-		if (numberOfVariables < numberOfEquations) {
-			System.out.println("number of variables is less than number of equations.");
-			display(arrayList);
-			System.out.println("Number of variables: " + numberOfVariables);
-			System.out.println("Number of equations: " + numberOfEquations);
-			printEquations(arrayList);
-			System.out.println("---");
-
-		}
-		*/
 
 		// Create a square matrix that is as large as needed to hold all
 		// variables and equations
@@ -237,8 +271,6 @@ public class Equation {
 		}
 
 
-
-
 		boolean freeVariablesPresent;
 
 		if(numberOfVariables < numberOfEquations){
@@ -260,11 +292,19 @@ public class Equation {
 
 	} // end of solve function
 
-	// This function checks whether the system of equations contains a free
-	// variable and
-	// returns true if so and false if not. The system of equations is
-	// represented by a
-	// matrix of coefficients and an array of constants (RHS).
+
+	/**
+	 * Checks whether the system of equations contains free variables.
+	 * <p>
+	 * This method is called by the solve method. The system of equations
+	 * is represented by a matrix of coefficients and an array of constants (RHS).
+	 *
+	 * @param coefficients_original a matrix of coefficients among the equations.
+	 * @param constants_original an array of constants (RHS)
+	 * @return true/false true if free variables are present,
+	 * false otherwise
+	 *
+	 */
 	public static boolean containsFreeVariables(double[][] coefficients_original, double[] constants_original) {
 
 		// make copy of coefficients and constants so as not to
@@ -279,24 +319,28 @@ public class Equation {
 		// FIRST, REDUCE MATRIX TO REDUCED ECHELON FORM
 		int N = constants.length;
 
+		// The below Gaussian elimination code is a slightly
+		// modified version of the code available at:
+		// https://ideone.com/plain/fGmEQQ
+
 		for (int k = 0; k < N; k++) {
-			/** find pivot row **/
+			/* find pivot row */
 			int max = k;
 			for (int i = k + 1; i < N; i++)
 				if (Math.abs(coefficients[i][k]) > Math.abs(coefficients[max][k]))
 					max = i;
 
-			/** swap row in A matrix **/
+			/* swap row in A matrix */
 			double[] temp = coefficients[k];
 			coefficients[k] = coefficients[max];
 			coefficients[max] = temp;
 
-			/** swap corresponding values in constants matrix **/
+			/* swap corresponding values in constants matrix */
 			double t = constants[k];
 			constants[k] = constants[max];
 			constants[max] = t;
 
-			/** pivot within A and B**/
+			/* pivot within A and B*/
 			for (int i = k + 1; i < N; i++) {
 
 				// Before determining factor by dividing by a number
@@ -329,7 +373,13 @@ public class Equation {
 		return false;
 	}
 
-	// this function makes a copy of a matrix and returns that copy
+
+	/**
+	 * Makes a copy of a matrix and returns that copy.
+	 *
+	 * @param matrix matrix of which to make a copy
+	 * @return temp copy of matrix parameter.
+	 */
 	public static double[][] copyMatrix(double[][] matrix){
 
 		double[][] temp = new double[matrix.length][matrix[0].length];
@@ -343,7 +393,12 @@ public class Equation {
 		return temp;
 	}
 
-	// this function makes a copy of an array and returns that copy
+	/**
+	 * Makes a copy of an arrya and returns that copy.
+	 *
+	 * @param array array of which to make a copy
+	 * @return temp copy of array parameter.
+	 */
 	public static double[] copyArray(double[] array){
 
 		double[] temp = new double[array.length];
@@ -359,6 +414,16 @@ public class Equation {
 	// Function checks a row in a matrix and in a
 	// vertical array to see if it is composed
 	// entirely of zeroes. If so, returns true. Otherwise, false.
+
+	/**
+	 * Checks a row in a matrix to see whether it is composed
+	 * entirely of zeroes.
+	 *
+	 * @param coefficients matrix of all the coefficients
+	 * @param constants array of constants (RHS)
+	 * @param row number of the row to check
+	 * @return true/false true if row has all zeroes, false otherwise
+	 */
 	public static boolean rowHasAllZeroes(double[][] coefficients, double[] constants, int row){
 
 		int col; // column
@@ -387,6 +452,13 @@ public class Equation {
 
 
 	// helper function to print matrix, for debugging
+	/**
+	 * Prints the coefficients of a system of equations
+	 * to the console. Used for debugging.
+	 *
+	 * @param matrix variable coefficients to print
+	 * @param constants RHS of equation to print
+	 */
 	public static void printMatrix(double[][] matrix, double[] constants) {
 		for (int row = 0; row < matrix.length; row++) {
 			for (int col = 0; col < matrix[0].length; col++) {
@@ -398,7 +470,12 @@ public class Equation {
 
 	}
 
-	// prints equation list, for debugging
+	/**
+	 * Prints a system of equations
+	 * to the console. Used for debugging.
+	 *
+	 * @param arrayList list of equations to print
+	 */
 	public static void printEquations(ArrayList<Equation> arrayList) {
 
 		for (int i = 0; i < arrayList.size(); i++) {
@@ -409,9 +486,13 @@ public class Equation {
 
 	}
 
-	// converts equation to string in a way helpful for debugging rather than
-	// for
-	// user to understand
+
+	/**
+	 * A method that creates a string representation of an
+	 * equation, for DEBUG display purposes.
+	 *
+	 * @return temp A string representation of an equation's TreeMap.
+	 */
 	public String toString2() {
 
 		String temp = "";
@@ -428,16 +509,9 @@ public class Equation {
 		while (itr.hasNext()) {
 			entry = itr.next();
 
-			// does not display the coefficient if it is a 1
-			// if (entry.getValue() == 1) {
-			// temp = temp + entry.getKey() + " + ";
-			// }
-			// does not display variable or coefficient if the coefficient is 0
-			// else if (entry.getValue() == 0) {
-			// do nothing
-			// } else {
+
 			temp = temp + entry.getValue() + entry.getKey() + " + ";
-			// }
+
 		}
 
 		// remove the last " + " of the string and replace it with a " = 0";
@@ -447,7 +521,6 @@ public class Equation {
 
 		return temp;
 
-		// return (temp.trim());
 
 	}
 }
