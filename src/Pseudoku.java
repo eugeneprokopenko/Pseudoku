@@ -16,7 +16,11 @@ import javafx.scene.input.*;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 
-
+/**
+ * This is the main program class. It uses JavaFX for the GUI.
+ *
+ * @author Eugene Prokopenko
+ */
 public class Pseudoku extends Application {
 
 	// test counter
@@ -79,6 +83,10 @@ public class Pseudoku extends Application {
 	// screen becomes locked after the Lock In Values button is pressed.
 	public static boolean screenLocked = false;
 
+	/**
+	 * This is the built in JavaFX start method that executes after
+	 * the launch instruction in the main method.
+	 */
 	public void start(Stage stage) {
 
 		// sets N equal to an integer chosen by user
@@ -346,6 +354,12 @@ public class Pseudoku extends Application {
 
 	}
 
+	/**
+	 * Handles a KeyReleased event. Called by the key listener
+	 * in the start method, above.
+	 *
+	 * @param e the key event to analyze
+	 */
 	private static void KeyReleased(KeyEvent e) {
 
 		// if L key was pressed, then draw lines
@@ -396,7 +410,11 @@ public class Pseudoku extends Application {
 
 	}
 
-	// resets the grid and equations for a new matrix
+	/**
+	 * Calls many subroutines to reset everything and
+	 * allow the user to begin anew without closing and
+	 * reopening the program.
+	 */
 	private static void reset() {
 
 		// NOTE: The reset is split into resetting the visible aspects of the
@@ -420,8 +438,11 @@ public class Pseudoku extends Application {
 
 	}
 
-	// resets equation solutions and list of equations, but not immutable
-	// property
+
+	/**
+	 * Resets equation solutions and the list of equations. Does not reset
+	 * immutable properties of the CustomBoxes.
+	 */
 	public static void resetEquations() {
 
 		// this for-loop resets all aspects of the matrix custom boxes except
@@ -453,7 +474,10 @@ public class Pseudoku extends Application {
 
 	}
 
-	// resets equationList arraylist
+
+	/**
+	 * Clears the equationList arraylist.
+	 */
 	private static void resetEquationList() {
 
 		// clears each of the treemaps that represents an equation, in case it
@@ -467,7 +491,10 @@ public class Pseudoku extends Application {
 
 	}
 
-	// resets twoDArray values and immutable properties
+
+	/**
+	 * Resets twoDArray values and immutable properties.
+	 */
 	private static void resetTwoDArray() {
 
 		for (int i = 0; i < twoDArray.length; i++) {
@@ -484,8 +511,13 @@ public class Pseudoku extends Application {
 
 	}
 
-	// this method resets and makes invisible the little letters and their boxes
-	// in the upper right of each small block, in preparation for another matrix
+
+
+	/**
+	 * Resets and makes invisible the little letters and their boxes
+	 * in the upper right of each small block, in preparation
+	 * for another matrix.
+	 */
 	public static void resetLetters() {
 
 		// resets values inside of grid boxes
@@ -506,7 +538,11 @@ public class Pseudoku extends Application {
 		}
 	}
 
-	// resets the grid that is visible to the user on the screen
+
+
+	/**
+	 * Resets the grid that is visible to the user on the screen.
+	 */
 	private static void resetGrid() {
 
 		// resets values inside of grid boxes
@@ -528,9 +564,14 @@ public class Pseudoku extends Application {
 
 	}
 
-	// Draws multicolored equation lines. Returns true if system of equations contains
-	// a free variable and returns false if system of equations does not contain a
-	// free variable.
+
+	/**
+	 * Draws multicolored equation lines.
+	 *
+	 * @return generateEquations() returns what the method generateEquations() returns.
+	 * Returns true if system of equations contains a free variable and returns false if
+	 * system of equations does not contain a free variable.
+	 */
 	public static boolean drawLines() {
 
 		// System.out.println("In drawLines");
@@ -724,7 +765,7 @@ public class Pseudoku extends Application {
 
 			if (letterPairPosition >= poolOfCharacters.length - 1) {
 
-				/**
+				/*
 				 * Alert alert = new Alert(AlertType.INFORMATION);
 				 * alert.setTitle("Warning"); alert.setHeaderText(null);
 				 * alert.setContentText(
@@ -745,9 +786,13 @@ public class Pseudoku extends Application {
 
 	}
 
-	// This function generates a system of linear equations based on the
-	// input inside the JavaFX GUI entered by the user. The function returns
-	// true if free variables are present in the system and false if not.
+
+	/**
+	 * Generates a system of linear equations based on the
+	 * input inside the JavaFX GUI entered by the user.
+	 *
+	 * @return true/false true if free variables are present in the system and false if not.
+	 */
 	private static boolean generateEquations() {
 
 		generateRowEquations();
@@ -778,8 +823,11 @@ public class Pseudoku extends Application {
 		return freeVariablesPresent;
 	}
 
-	// generates equations from each row in the matrix and adds the equations to
-	// the list of equations
+
+	/**
+	 * Generates equations from each row in the matrix and adds the equations to
+	 * the list of equations.
+	 */
 	private static void generateRowEquations() {
 
 		// rather than comparing i and j to the length of the array in the for
@@ -791,9 +839,6 @@ public class Pseudoku extends Application {
 
 			for (int j = 0; j < N * N; j++) {
 
-				// System.out.println("row = " + i);
-				// System.out.println("column = " + j);
-				// System.out.println(twoDArray[i][j].letter);
 
 				if (!twoDArray[i][j].letter.equals(" ")) {
 
@@ -817,8 +862,11 @@ public class Pseudoku extends Application {
 
 	}
 
-	// generates equations from each column in the matrix and adds the equations
-	// to the list of equations
+
+	/**
+	 * Generates equations from each column in the matrix and adds the equations
+	 * to the list of equations.
+	 */
 	private static void generateColumnEquations() {
 
 		// rather than comparing i and j to the length of the array in the for
@@ -856,8 +904,11 @@ public class Pseudoku extends Application {
 
 	}
 
-	// generates equations from each big block in the matrix and adds the
-	// equations to the list of equations
+
+	/**
+	 * Generates equations from each big block in the matrix and adds the
+	 * equations to the list of equations
+	 */
 	private static void generateBigBoxEquations() {
 
 		for (int topLeftBigBoxRow = 0; topLeftBigBoxRow < N * N; topLeftBigBoxRow = topLeftBigBoxRow + N) {
@@ -895,7 +946,14 @@ public class Pseudoku extends Application {
 		}
 	}
 
-	// draws a line between two small boxes
+
+	/**
+	 * Draws a line between two small boxes.
+	 *
+	 * @param startingPoint The CustomBox from which to start the line.
+	 * @param endingPoint The CustomBox at which to end the line.
+	 * @param color The color of the line.
+	 */
 	public static void drawLine(CustomBox startingPoint, CustomBox endingPoint, Color color) {
 
 		// System.out.println(testCounter);
@@ -909,7 +967,13 @@ public class Pseudoku extends Application {
 
 	}
 
-	// finds a valid starting point for a new line. If none exist, returns null.
+
+	/**
+	 * Finds a valid starting point for a new line.
+	 *
+	 * @return CustomBox that is a starting point of a new line. If
+	 * none exist, returns null.
+	 */
 	public static CustomBox findNewStartingPoint() {
 
 		for (int i = 0; i < twoDArray.length - 1; i++) {
@@ -929,10 +993,19 @@ public class Pseudoku extends Application {
 		return null;
 	}
 
-	// checks the rest of the values in the row of the given CustomBox
-	// to see if a complementary value (N minus current value) is found in a
-	// small box that is not already part of a line series. Returns null if not
-	// found.
+
+	/**
+	 * Checks the rest of the values in the row of the given CustomBox
+	 * to see if a complementary value (N minus current value) is found in a
+	 * small box that is not already part of a line series. Returns null if not
+	 * found.
+	 *
+	 * @param row Row of the given CustomBox
+	 * @param column Column of the given CustomBox.
+	 * @param complementaryValue The complementary value to find.
+	 * @return CustomBox containing the complementary value. Returns
+	 * null if a CustomBox is not found.
+	 */
 	public static CustomBox checkRow(int row, int column, int complementaryValue) {
 
 		// System.out.println("In checkRow");
@@ -957,10 +1030,18 @@ public class Pseudoku extends Application {
 
 	}
 
-	// checks the rest of the values in the column of the given CustomBox
-	// to see if a complementary value (N minus current value) is found in a
-	// small box that is not already part of a line series. Returns null if not
-	// found.
+
+	/**
+	 * Checks the rest of the values in the column of the given CustomBox
+	 * to see if a complementary value (N minus current value) is found in a
+	 * small box that is not already part of a line series.
+	 *
+	 * @param row Row of the given CustomBox.
+	 * @param column Column of the given CustomBox.
+	 * @param complementaryValue Complementary value to search for.
+	 * @return CustomBox containing the complementary value. Returns
+	 * null if a CustomBox is not found.
+	 */
 	public static CustomBox checkColumn(int row, int column, int complementaryValue) {
 
 		// check all boxes below the starting point
@@ -982,11 +1063,18 @@ public class Pseudoku extends Application {
 		return null;
 	}
 
-	// Checks the rest of the values in the big box containing the parameter
-	// row and column
-	// to see if a complementary value (N minus current value) is found in a
-	// small box that is not already part of a line series. Returns null if not
-	// found.
+
+	/**
+	 * Checks the rest of the values in the big box of the given CustomBox
+	 * to see if a complementary value (N minus current value) is found in a
+	 * small box that is not already part of a line series.
+	 *
+	 * @param row Row of the given CustomBox.
+	 * @param column Column of the given CustomBox.
+	 * @param complementaryValue Complementary value to search for.
+	 * @return CustomBox containing the complementary value. Returns
+	 * null if a CustomBox is not found.
+	 */
 	public static CustomBox checkBigBox(int row, int column, int complementaryValue) {
 
 		int startRow = 0;
@@ -1001,12 +1089,7 @@ public class Pseudoku extends Application {
 			startColumn = startColumn + N;
 		}
 
-		/**
-		 * if (startRow < 0) { startRow = 0; System.out.println(
-		 * "In a part that should never be reached"); } if (startColumn < 0) {
-		 * startColumn = 0; System.out.println(
-		 * "In a part that should never be reached"); }
-		 */
+
 
 		// check the big box
 		for (int topLeftBigBoxRow = startRow; topLeftBigBoxRow < startRow + N; ++topLeftBigBoxRow) {
@@ -1024,6 +1107,15 @@ public class Pseudoku extends Application {
 		return null;
 	}
 
+	/**
+	 * Gets the next pair of letters of a defined pool of letters.
+	 *
+	 * @param position Position of the first available letter in the
+	 * pool of letters.
+	 * @param poolOfCharacters This is an array of characters containing
+	 * a pool of letters.
+	 * @return temp A string containing two letters.
+	 */
 	public static String[] getNewLetterPair(int position, char[] poolOfCharacters) {
 
 		// System.out.println("In getNewLetterPair");
@@ -1037,12 +1129,22 @@ public class Pseudoku extends Application {
 
 	}
 
-	// returns a random color
+
+	/**
+	 *
+	 * @return A random color.
+	 */
 	public static Color randomColor() {
 		return new Color(Math.random(), Math.random(), Math.random(), Math.random());
 	}
 
-	// prompts user for an N value and sets N equal to that integer
+
+
+	/**
+	 * Prompts user for an N value and sets N equal to that integer.
+	 * This is launched at the very start of the program before the
+	 * main stage is visible to the user.
+	 */
 	private static void obtainNValueFromUser() {
 
 		Stage initialStage = new Stage();
@@ -1107,7 +1209,10 @@ public class Pseudoku extends Application {
 
 	}
 
-	// initializes matrix and displays the grid in the center pane
+
+	/**
+	 * Initializes matrix and displays the grid in the center pane.
+	 */
 	private static void initializeMatrixAndGrid() {
 
 		// initialize matrix values and display the matrix
@@ -1158,7 +1263,10 @@ public class Pseudoku extends Application {
 
 	}
 
-	// removes all lines from the centerPane
+
+	/**
+	 * Removes all lines from the centerPane (the grid(.
+	 */
 	private static void clearLines() {
 
 		// this line is created simply to extract its ".getClass()" return so as
@@ -1182,9 +1290,6 @@ public class Pseudoku extends Application {
 
 		}
 
-		// testCounter = 0;
-
-		// System.out.println("In clear lines");
 
 		for (int i = 0; i < nodesToBeDeleted.size(); i++) {
 			centerPane.getChildren().remove(nodesToBeDeleted.get(i));
@@ -1198,8 +1303,11 @@ public class Pseudoku extends Application {
 
 	}
 
-	// adds thick lines to centerPane so as to divide up the grid into NxN big
-	// boxes, making the grid easy to visualize at a glance
+
+	/**
+	 * Adds thick lines to centerPane so as to divide up the grid into NxN big
+	 * boxes, making the grid easy to visualize at a glance.
+	 */
 	private static void addThickLines() {
 
 		for (int i = 0; i < twoDArray.length; i++) {
@@ -1227,8 +1335,14 @@ public class Pseudoku extends Application {
 		}
 	}
 
-	// adds up all values in a given row, changes summation box to green if sum
-	// = N, and returns sum
+
+	/**
+	 * Adds up all values in a given row.
+	 * Changes summation box to green if sum = N.
+	 *
+	 * @param row Row whose sum is to be obtained.
+	 * @return rowSum Sum of the row.
+	 */
 	public static int addUpRow(int row) {
 
 		int rowSum = 0;
@@ -1246,10 +1360,13 @@ public class Pseudoku extends Application {
 
 	}
 
-	// This function adds up the values in rows until it finds a row that does
-	// not add up to N, turns the summation box
-	// at the right-most column green if the row adds up to N, and returns true
-	// if all rows add up to N.
+
+	/**
+	 * Calls the addUpRow subroutine to add up all the rows.
+	 *
+	 * @return true/false Returns true if all the rows add up to N,
+	 * and returns false otherwise.
+	 */
 	public static boolean addUpAllRows() {
 
 		for (int row = 0; row < N * N; row++) {
@@ -1263,6 +1380,13 @@ public class Pseudoku extends Application {
 		return true;
 	}
 
+	/**
+	 * Adds up all values in a given column.
+	 * Changes summation box to green if sum = N.
+	 *
+	 * @param colum Column whose sum is to be obtained.
+	 * @return columnSum Sum of the column.
+	 */
 	public static int addUpColumn(int column) {
 
 		int columnSum = 0;
@@ -1280,10 +1404,12 @@ public class Pseudoku extends Application {
 
 	}
 
-	// This function adds up the values in the columns until it finds a column
-	// that does not add up to N, turns the summation box
-	// at the bottom-most row green if the column adds up to N, and returns true
-	// if all columns add up to N.
+	/**
+	 * Calls the addUpColumn subroutine to add up all the columns.
+	 *
+	 * @return true/false Returns true if all the columns add up to N,
+	 * and returns false otherwise.
+	 */
 	public static boolean addUpAllColumns() {
 
 		for (int column = 0; column < N * N; column++) {
@@ -1301,6 +1427,13 @@ public class Pseudoku extends Application {
 	// boxes in the big box green if the small boxes add up to N, and returns
 	// true if all the big boxes add up to N. It does not return until it
 	// traverses every big box.
+
+	/**
+	 * Calls the addUpBigBox subroutine to add up all the big boxes.
+	 *
+	 * @return true/false Returns true if all the big boxes add up to N,
+	 * and returns false otherwise.
+	 */
 	public static boolean addUpAllBigBoxes() {
 
 		for (int topLeftBigBoxRow = 0; topLeftBigBoxRow < N * N; topLeftBigBoxRow = topLeftBigBoxRow + N) {
@@ -1318,12 +1451,19 @@ public class Pseudoku extends Application {
 		return true;
 	}
 
-	// Sums up all values in a big box, changes its color to green if sum is N,
-	// and returns the sum.
-	// The ready variable is true if the top left row and top left column passed
-	// in represent the top left row and column.
-	// The ready variable is false if those variables represent some arbitrary
-	// row and column within the big box.
+
+	/**
+	 * Sums up all values in a big box, changes its color to green if sum is N.
+	 *
+	 * @param topLeftBigBoxRow
+	 * @param topLeftBigBoxColumn
+	 * @param ready The ready parameter is true if the top left row
+	 * and top left column passed in represent the top left row and column.
+	 * The ready variable is false if those variables represent some arbitrary
+	 * row and column within the big box, thus needing extra processing to
+	 * ascertain the top left small box of the big box.
+	 * @return bigBoxSum The sum of the big box.
+	 */
 	public static int addUpBigBox(int topLeftBigBoxRow, int topLeftBigBoxColumn, boolean ready) {
 
 		int bigBoxSum = 0;
@@ -1370,6 +1510,15 @@ public class Pseudoku extends Application {
 
 	}
 
+	/**
+	 * Changes the color of each small box in a given big box to the chosen color.
+	 *
+	 * @param topLeftBigBoxRow Integer representing the vertical location (y value)
+	 * of the top left big box location.
+	 * @param topLeftBigBoxColumn Integer representing the horizontal location (x value)
+	 * of the top left big box location.
+	 * @param color Color to which to change all the small boxes within the big box.
+	 */
 	public static void changeBigBoxColor(int topLeftBigBoxRow, int topLeftBigBoxColumn, Color color) {
 
 		for (int row = topLeftBigBoxRow; row < topLeftBigBoxRow + N; row++) {
@@ -1388,6 +1537,11 @@ public class Pseudoku extends Application {
 		}
 	}
 
+	/**
+	 * This is the formulaic way to launch a JavaFX program.
+	 *
+	 * @param args commandline parameters.
+	 */
 	public static void main(String[] args) {
 
 		launch(args);
