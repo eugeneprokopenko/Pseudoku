@@ -8,8 +8,16 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.DirectoryChooser;
 
+/**
+ * @author Eugene Prokopenko
+ */
 public class OpenSave {
 
+	/**
+	 * Opens a file dialog allowing user to choose a directory.
+	 * <p>
+	 * @return the selected directory.
+	 */
 	public static File getDirectory() {
 
 		Stage mainStage = new Stage();
@@ -24,6 +32,10 @@ public class OpenSave {
 
 	}
 
+	/**
+	 * Calls the saveMatrix method when user chooses to save a
+	 * matrix displayed on the screen.
+	 */
 	public static void saveMatrixByUser() {
 
 		File filePath = getSaveFilePath();
@@ -34,6 +46,11 @@ public class OpenSave {
 
 	}
 
+	/**
+	 * Opens a file dialog allowing user to open a file.
+	 * <p>
+	 * @return path where to save the file.
+	 */
 	public static File getSaveFilePath() {
 
 		Stage mainStage = new Stage();
@@ -49,9 +66,12 @@ public class OpenSave {
 	}
 
 
-	// Saves the matrix displayed on the screen as a text file by copying
-	// contents of all textboxes from the equationBox pane into a txt file.
-	// NOTE: This method is not currently being used by the program.
+	/**
+	 * Saves the matrix displayed on the screen as a text file by copying
+	 * contents of all textboxes from the equationBox pane into a txt file.
+	 * <p>
+	 * @param filePath the path where file should be saved.
+	 */
 	public static void saveMatrixByCopyingEquationBox(File filePath) {
 
 		PrintWriter fileOutput = null;
@@ -99,8 +119,12 @@ public class OpenSave {
 
 	}
 
-	// saves the matrix displayed on the screen as a text file by copying
-	// contents of program variables into the txt file
+	/**
+	 * Saves the matrix displayed on the screen as a text file by copying
+	 * contents of program variables into the txt file.
+	 * <p>
+	 * @param filePath the path where file should be saved.
+	 */
 	public static void saveMatrix(File filePath) {
 
 		// System.out.println(filePath.getAbsolutePath());
@@ -159,12 +183,13 @@ public class OpenSave {
 
 	}
 
+/**
+ * Calls the getOpenFileName method to open a matrix file
+ * chosen by the user.
+ */
 	public static void openMatrixByUser() {
 
 		File fileName = getOpenFileName();
-
-		// need a failsafe test to make sure the opened file is the same size as
-		// the current N
 
 		if (fileName != null) {
 			openMatrix(fileName);
@@ -172,6 +197,11 @@ public class OpenSave {
 
 	}
 
+	/**
+	 * Displays a file dialog allowing user to choose a file to open.
+	 * <p>
+	 * @return name of the file to open, including the path.
+	 */
 	public static File getOpenFileName() {
 
 		Stage mainStage = new Stage();
@@ -185,7 +215,9 @@ public class OpenSave {
 		return fileName;
 	}
 
-	// saves the matrix displayed on the screen as a text file
+	/**
+	 * Saves the matrix displayed on the screen as a text file.
+	 */
 	public static void openMatrix(File fileName) {
 
 		// variable declarations
