@@ -4,6 +4,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import java.util.*;
 
+/**
+ * This is a class manages auto generation of matrices.
+ *
+ * @author Eugene Prokopenko
+ */
 public class AutoGeneration {
 
 	private static final int N = Pseudoku.N;
@@ -43,6 +48,9 @@ public class AutoGeneration {
 	// previously found by the AutoGeneration algorithm.
 	public static LinkedList<ArrayList<Equation>> memory = new LinkedList<ArrayList<Equation>>();
 
+	/**
+	 * Resets and clears all fields within the AutoGeneration class.
+	 */
 	public static void reset(){
 
 		// reset matrix counter variables
@@ -65,6 +73,12 @@ public class AutoGeneration {
 
 	}
 
+	/**
+	 * Calls the setImmutability method to lock in certain boxes as
+	 * unchangeable by the AutoGeneration algorithm.
+	 *
+	 * @param twoDArray the matrix of CustomBoxes where values should be locked.
+	 */
 	public static void lockInValues(CustomBox[][] twoDArray) {
 
 		// Sets immutability by indicating which box's values have been
@@ -72,6 +86,13 @@ public class AutoGeneration {
 		setImmutability(twoDArray);
 	}
 
+	/**
+	 * Auto generates matrices until a certain number have been generated
+	 * or no more matrices can be generated.
+	 *
+	 * @param twoDArray the matrix of CustomBoxes from which to
+	 * generate more matrices.
+	 */
 	public static void continueAutoGeneration(CustomBox[][] twoDArray) {
 
 		/**
@@ -310,14 +331,18 @@ public class AutoGeneration {
 
 			// fills the current small box being considered with orange color
 			placeOrangeFillOnCurrentPoint();
-			// System.out.println("");
-			// System.out.println("Current point: " + currentPoint.row + ", " + currentPoint.column + ", " + currentPoint.value);
-			// System.out.println("");
+
 
 		} // ending bracket of "if (!done)" conditional
 
 	}
 
+	/**
+	 * Makes a copy of an array list.
+	 *
+	 * @temp equationList array list to copy
+	 * @return temp a copy of the array list to copy
+	 */
 	public static ArrayList<Equation> copyEquationList(ArrayList<Equation> equationList){
 
 		ArrayList<Equation> temp = new ArrayList<>();
@@ -334,6 +359,12 @@ public class AutoGeneration {
 
 	}
 
+
+	/**
+	 * Prints a linked list of systems of equations to the console. For debugging.
+	 *
+	 * @param memory linked list to print.
+	 */
 	public static void printMemory(LinkedList<ArrayList<Equation>> memory){
 
 		System.out.println("memory size: " + memory.size());
@@ -358,27 +389,17 @@ public class AutoGeneration {
 
 	}
 
+	/**
+	 * Checks whether the family represented by a system of equations is already
+	 * represented in the memory of previously seen systems of equations.
+	 *
+	 * @param memory a linked list of systems of equations previously encountered.
+	 * @param equationList a system of equations to check.
+	 * @return true/false true if already represented, false otherwise.
+	 */
 	public static boolean familyAlreadyRepresented(LinkedList<ArrayList<Equation>> memory, ArrayList<Equation> equationList){
 
 		boolean mismatch = false;
-
-		/*
-		System.out.println(" =========== ");
-		System.out.println("memory size in familyAlreadyRepresented: " + memory.size());
-
-
-
-		System.out.println("-----");
-		System.out.println("LINKED LIST: ");
-		printMemory(memory);
-
-		System.out.println("equationList: ");
-		for(int index = 0; index < equationList.size(); index++){
-			System.out.println(equationList.get(index).toString());
-		}
-		System.out.println("-----");
-		System.out.println("");
-		*/
 
 		if (memory.size() > 0) {
 
@@ -391,11 +412,6 @@ public class AutoGeneration {
 					continue;
 				} else {
 
-					// Delete this comment: Create an array of booleans equal in length to the equation set.
-					// Each location in array will track whether an equation in memory
-					// matched an equation in equationList. If any locations are set to
-					// false after comparison is complete, then these two sets do not match.
-					// boolean[] match_array = new boolean[equationList.size()];
 
 					// every time there is no match between an equation in memory and the entire
 					// set in equationList, we break out of the for-loop. If we broke out of the
@@ -459,8 +475,12 @@ public class AutoGeneration {
 
 	}
 
-	// this function lets a person visualize what point is currently being
-	// considered by the algorithm by filling the current small box with orange
+
+	/**
+	 * Lets a user visualize what point is currently being
+	 * considered by the auto generation algorithm by filling the
+	 * current small box with an orange color.
+	 */
 	private static void placeOrangeFillOnCurrentPoint() {
 
 		for (int topLeftBigBoxRow = 0; topLeftBigBoxRow < N * N; topLeftBigBoxRow = topLeftBigBoxRow + N) {
@@ -477,6 +497,13 @@ public class AutoGeneration {
 	}
 
 	// Returns next point that is non-immutable and non-blocked.
+	/**
+	 * Determines next point to modify during the auto generation process.
+	 *
+	 * @param twoDArray matrix being worked on during auto generation.
+	 * @param currPoint current point being considered.
+	 * @return the grid point to modify next.
+	 */
 	private static GridPoint getNextPoint(CustomBox[][] twoDArray, GridPoint currPoint) {
 
 		/**
@@ -534,13 +561,6 @@ public class AutoGeneration {
 
 			for (int j = nextPointColumn; j < N * N; j++) {
 
-				/**
-				 * if (i >= 7) {
-				 *
-				 * if (twoDArray[i][j].outline.getStroke() == Color.BLACK) {
-				 * twoDArray[i][j].outline.setStroke(Color.YELLOW); } else {
-				 * twoDArray[i][j].outline.setStroke(Color.BLACK); } }
-				 */
 
 				// If the position is not immutable and is not part of a
 				// completed row, column, or big box, then position is found.
@@ -568,16 +588,20 @@ public class AutoGeneration {
 		// if no non-immutable, non-blocked point is not found, then the method
 		// sends a dummy point of -1, -1, -1 to notify the calling instruction
 
-		// System.out.println("");
-		// System.out.println("getNextPoint returned -1, -1, -1");
-		// System.out.println("");
 
 		return new GridPoint(-1, -1, -1);
 
 	}
 
-	// This function finds the sum of the row/column/big block that contains the
-	// GridPoint parameter. It returns false if any sum is larger than N.
+	// This function
+
+	/**
+	 * Finds the sum of the row/column/big block that contains the
+	 * GridPoint parameter. It returns false if any sum is larger than N.
+	 *
+	 * @param pointToCheck the point to check
+	 * @return true/false true if point is legal, false otherwise
+	 */
 	private static boolean legal(GridPoint pointToCheck) {
 
 		// these variables keep track of the sum in their respective
@@ -658,6 +682,12 @@ public class AutoGeneration {
 		return true;
 	}
 
+	/**
+	 * Calls the continueAutoGeneration method while the autogeneration
+	 * is not done and not paused.
+	 *
+	 * @param twoDArray The matrix being operated on.
+	 */
 	public static void beginAutoGeneration(CustomBox[][] twoDArray) {
 
 		while (!paused && !done) {
@@ -666,6 +696,10 @@ public class AutoGeneration {
 
 	}
 
+	/**
+	 * Pause the auto generation process.
+	 *
+	 */
 	public static void pauseAutoGeneration() {
 
 		// pauses auto-generation
@@ -677,6 +711,13 @@ public class AutoGeneration {
 
 	}
 
+	/**
+	 * This method calls several helper methods so as to set
+	 * grid boxes to immutable, as needed. Immutability means
+	 * the box cannot be modified by the auto generation process.
+	 *
+	 * @param twoDArray the matrix being operated on.
+	 */
 	public static void setImmutability(CustomBox[][] twoDArray) {
 
 		// The three functions below check whether certain small boxes have been
@@ -693,6 +734,11 @@ public class AutoGeneration {
 
 	}
 
+	/**
+	 * Checks columns in a matrix for immutability.
+	 *
+	 * @param twoDArray the matrix being operated on.
+	 */
 	public static void checkColumnsForImmutability(CustomBox[][] twoDArray) {
 
 		for (int column = 0; column < N * N; ++column) {
@@ -710,6 +756,11 @@ public class AutoGeneration {
 		}
 	}
 
+	/**
+	 * Checks rows in a matrix for immutability.
+	 *
+	 * @param twoDArray the matrix being operated on.
+	 */
 	public static void checkRowsForImmutability(CustomBox[][] twoDArray) {
 
 		for (int row = 0; row < N * N; ++row) {
@@ -728,6 +779,11 @@ public class AutoGeneration {
 
 	}
 
+	/**
+	 * Checks big boxes in a matrix for immutability.
+	 *
+	 * @param twoDArray the matrix being operated on.
+	 */
 	public static void checkBigBoxesForImmutability(CustomBox[][] twoDArray) {
 
 		// the two outer for loops iterate through the top left corners of each
@@ -758,21 +814,25 @@ public class AutoGeneration {
 		}
 	}
 
-	// This is an inner class. Each gridPoint object will represent a small box
-	// on the grid, along with a value to try in that point during
-	// auto-generation. The point and value have not yet been tried, and are
-	// therefore created and subsequently stored in a stack.
+
+	/**
+	 * This is a class that represents one grid point in the matrix.
+	 * It is analogous to the custom box, but this allows a matrix to
+	 * be operated on without necessarily changing what is displayed
+	 * on the screen.
+	 * <p>
+	 * This is an inner class. Each gridPoint object will represent a small box
+	 * on the grid, along with a value to try in that point during
+	 * auto-generation. The point and value have not yet been tried, and are
+	 * therefore created and subsequently stored in a stack.
+	 *
+	 * @author Eugene Prokopenko
+	 */
 	private static class GridPoint {
 
 		public int row;
 		public int column;
 		public int value;
-
-		/**
-		 * public gridPoint(){ row = 0; column = 0; value = 0;
-		 *
-		 * }
-		 */
 
 		public GridPoint(int row, int column, int value) {
 			this.row = row;
