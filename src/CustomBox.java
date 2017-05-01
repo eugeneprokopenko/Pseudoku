@@ -5,7 +5,12 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-// every instance of the class is one little box on the screen
+/**
+ * Every instance of the class is one little box on the screen.
+ *
+ * @author Eugene Prokopenko
+ */
+
 public class CustomBox {
 
 	private static final int N = Pseudoku.N;
@@ -48,6 +53,12 @@ public class CustomBox {
 	// directly or indirectly.
 	public boolean immutable;
 
+	/**
+	 * Contructor for the CustomBox class.
+	 *
+	 * @param x horizontal coordinate of the box
+	 * @param y vertical coordinate of the box
+	 */
 	public CustomBox(double x, double y) {
 
 		value = 0;
@@ -99,7 +110,13 @@ public class CustomBox {
 
 	}
 
-	// Handle text click
+
+	/**
+	 * This method is called by the click handler of the custom box.
+	 * Each click causes the value within the custom box to cycle between
+	 * 0 and N - 1. The value is changed by calling the setValue() method.
+	 *
+	 */
 	public void textClicked() {
 
 		// don't change the screen if it is locked
@@ -115,22 +132,22 @@ public class CustomBox {
 			this.setValue(0);
 		}
 
-		/**
-		 * text.setText(Integer.toString(value));
-		 *
-		 * Pseudoku.addUpRows(); Pseudoku.addUpColumns();
-		 * Pseudoku.addUpBigBoxes();
-		 *
-		 */
 
 	}
 
+	/**
+	 * Gets the integer value contained within the custom box
+	 *
+	 * @return value the value within the custom box.
+	 */
 	public int getValue() {
 		return value;
 	}
 
-	// This method ensures that whenever a value is updated, the summation boxes
-	// are also updated
+	/**
+	 * This method ensures that whenever a value is updated,
+	 * the summation boxes are also updated.
+	 */
 	public void setValue(int x) {
 
 		this.value = x;
