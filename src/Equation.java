@@ -189,6 +189,11 @@ public class Equation {
 		if(!freeVariablesPresent){
 			Pseudoku.equationBox.getChildren().add(new Text("THIS IS A VERTEX!"));
 			Pseudoku.equationBox.getChildren().add(new Text(""));
+		}else{
+
+			Pseudoku.equationBox.getChildren().add(new Text("This is not a vertex."));
+			Pseudoku.equationBox.getChildren().add(new Text(""));
+
 		}
 
 		// display equation list
@@ -273,7 +278,8 @@ public class Equation {
 
 		boolean freeVariablesPresent;
 
-		if(numberOfVariables < numberOfEquations){
+
+		if(numberOfVariables > numberOfEquations){
 			// If there are more variables than equations in the system,
 			// then we know that the system is not constrained enough.
 			freeVariablesPresent = true;
@@ -284,7 +290,12 @@ public class Equation {
 			// Find out if system of equations contains free variables
 			// by reducing to row echelon form and checking whether one row
 			// consists entirely of zeroes
+
+			// check whether at least one equation in the system has no variables that
+			// are dependent on any other equation
+
 			freeVariablesPresent = containsFreeVariables(coefficients, constants);
+			// boolean equation_lacks_dependency = equationInSystemLacksDependency(arrayList);
 		}
 
 
@@ -292,6 +303,83 @@ public class Equation {
 
 	} // end of solve function
 
+
+	/**
+	 * Checks whether the variables of an equation in the
+	 * arrayList of equations lack dependencies in other
+	 * equations.
+	 * <p>
+	 * If an equation has variables, none of which are present
+	 * in any other equation, then the variables in that
+	 * equation lack dependencies and are therefore free.
+	 * THIS METHOD IS NOT CURRENTLY IN USE.
+	 *
+	 *
+	 * @param arrayList contains equations to evaluate.
+	 * @return true/false True if any equation's variables
+	 * lack dependencies. False, otherwise.
+	 */
+	//
+	public static boolean equationInSystemLacksDependency(ArrayList<Equation> arrayList) {
+
+
+		// is set to true in the inner for-loop if at least one of
+		// a given equation's variables are present in another
+		// equation.
+		boolean found = false;
+
+		int j;
+
+		if (arrayList.size() > 1) {
+
+			// i is index of equation whose variables are being checked
+			for (int i = 0; i < arrayList.size(); i++) {
+
+				// Get the set of all variables from the i equation.
+				Set<String> i_variables = arrayList.get(i).map.keySet();
+
+				// reset found to false for a new i equation
+				found = false;
+
+				// j is index of equation against which i's variables are
+				// being checked
+				for (j = 0; j < arrayList.size(); j++) {
+
+					// Get the set of all variables from the j equation.
+					Set<String> j_variables = arrayList.get(j).map.keySet();
+
+					// For each variable in i, check whether it is in j.
+					// If yes, Set the found variable to true and break out
+					// of for-loop to move onto the next i equation.
+
+					// Now we check whether at least one of i's variables is
+					// present in j's equation
+					for(String i_variable: i_variables){
+			            if(i != j && j_variables.contains(i_variable));
+			            found = true;
+			            break;
+			        }
+
+
+
+				} // end of j for-loop
+
+				// check if we have checked every j equation but
+				// no i variables were found.
+				if (found == false && j == arrayList.size()){
+					return true;
+				}
+
+			} // end of i for-loop
+
+			//
+			return false;
+		}
+
+		// if equation list is empty, then no variables, including
+		// free variables, are present
+		return false;
+	}
 
 	/**
 	 * Checks whether the system of equations contains free variables.
