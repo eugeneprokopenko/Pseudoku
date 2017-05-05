@@ -5,7 +5,7 @@ import javafx.scene.text.Text;
 import java.util.*;
 
 /**
- * This is a class manages auto generation of matrices.
+ * This class manages auto generation of matrices.
  *
  * @author Eugene Prokopenko
  */
@@ -59,7 +59,7 @@ public class AutoGeneration {
 		numberOfVerticesFound = 0;
 
 		// resets textboxes with counters
-		Pseudoku.pointsChecked.setText("Points Checked: " + numberOfShapePointsChecked);
+		Pseudoku.pointsChecked.setText("Matrices Checked: " + numberOfShapePointsChecked);
 		Pseudoku.pointsFound.setText("Points Found: " + numberOfShapePointsFound);
 		Pseudoku.verticesFound.setText("Vertices Found: " + numberOfVerticesFound);
 
@@ -299,7 +299,7 @@ public class AutoGeneration {
 					// multiple of a certain value. Otherwise, the number would
 					// be incrementing to quickly to be readable.
 					// if (numberOfShapePointsChecked % 1 == 0) {
-						Pseudoku.pointsChecked.setText("Points Checked: " + numberOfShapePointsChecked);
+						Pseudoku.pointsChecked.setText("Matrices Checked: " + numberOfShapePointsChecked);
 					// }
 
 					// because a valid point was found, break out of the while
