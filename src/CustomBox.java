@@ -147,6 +147,8 @@ public class CustomBox {
 	/**
 	 * This method ensures that whenever a value is updated,
 	 * the summation boxes are also updated.
+	 *
+	 * @param x The number to which to set value in the Custom Box
 	 */
 	public void setValue(int x) {
 
