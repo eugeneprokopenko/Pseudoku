@@ -725,12 +725,42 @@ public class AutoGeneration {
 		checkBigBoxesForImmutability(twoDArray);
 		checkRowsForImmutability(twoDArray);
 		checkColumnsForImmutability(twoDArray);
+		checkIndividualSmallBoxesForImmutability(twoDArray);
 
 		// display an informational message for the user
 		Pseudoku.equationBox.getChildren().add(new Text("The pink boxes have been set as immutable."));
 		Pseudoku.equationBox.getChildren().add(new Text("Their values will not be changing."));
 		Pseudoku.equationBox.getChildren().add(new Text(""));
 		Pseudoku.primaryStage.sizeToScene();
+
+	}
+
+	/**
+	 * Checks individual small boxes in a matrix for immutability.
+	 * <p>
+	 * This method considers a small box immutable before auto-generation if
+	 * it has a non-zero value.
+	 *
+	 * @param twoDArray the matrix being operated on.
+	 */
+	public static void checkIndividualSmallBoxesForImmutability(CustomBox[][] twoDArray){
+
+		for (int row = 0; row < N * N; row++) {
+
+			for (int column = 0; column < N * N; column++) {
+
+				// make all non-zero values immutable
+				if(twoDArray[row][column].getValue() != 0){
+
+					twoDArray[row][column].immutable = true;
+					twoDArray[row][column].outline.setFill(Color.RED);
+
+				}
+
+			}
+
+
+		}
 
 	}
 
