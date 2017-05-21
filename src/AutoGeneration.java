@@ -770,18 +770,14 @@ public class AutoGeneration {
 	 * @param twoDArray the matrix being operated on.
 	 */
 	public static void checkColumnsForImmutability(CustomBox[][] twoDArray) {
-
 		for (int column = 0; column < N * N; ++column) {
-
-			// if the summation box of the row equals N, then all the small
-			// boxes of that row are immutable
+			// if the summation box of the column equals N, then all the small
+			// boxes of that column are immutable
 			if (twoDArray[N * N][column].getValue() == N) {
-
 				for (int row = 0; row < N * N; ++row) {
 					twoDArray[row][column].immutable = true;
 					twoDArray[row][column].outline.setFill(Color.RED);
 				}
-
 			}
 		}
 	}

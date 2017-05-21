@@ -291,12 +291,12 @@ public class Pseudoku extends Application {
 					// resized primaryStage to fit equations and their solutions
 					primaryStage.sizeToScene();
 
-					if(!freeVariablesPresent){
+					/*if(!freeVariablesPresent){
 						System.out.println("No free variables.");
 					}
 					else{
 						System.out.println("Free variables present.");
-					}
+					}*/
 
 				} else {
 					equationBox.getChildren().add(new Text("ERROR: All boxes must be green to solve equations."));

@@ -86,25 +86,16 @@ public class Equation {
 	 */
 	//
 	public static void removeRedundantEquations(ArrayList<Equation> arrayList) {
-
 		if (arrayList.size() > 1) {
-
 			for (int i = 0; i < arrayList.size() - 1; i++) {
-
 				for (int j = i + 1; j < arrayList.size(); j++) {
-
 					if (arrayList.get(i).map.equals(arrayList.get(j).map)) {
-
 						arrayList.remove(j);
-
 						// decrease j by one to compensate for the removal of
 						// one element in the array list
 						j--;
-
 					}
-
 				}
-
 			}
 		}
 	}

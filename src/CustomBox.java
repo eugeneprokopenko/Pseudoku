@@ -118,20 +118,15 @@ public class CustomBox {
 	 *
 	 */
 	public void textClicked() {
-
 		// don't change the screen if it is locked
 		if(Pseudoku.screenLocked)
 			return;
-
 		// cycles through values between 0 and N-1 with every mouse click
 		if (this.getValue() < (N - 1)) {
-
 			this.setValue(this.getValue() + 1);
-
 		} else {
 			this.setValue(0);
 		}
-
 
 	}
 
